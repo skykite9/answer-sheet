@@ -1,0 +1,150 @@
+ 
+\newif\if@mac
+
+\DeclareOption{mac}{\@mactrue}
+\DeclareOption{win}{\@macfalse}
+\ExecuteOptions{mac}
+\ProcessOptions\relax
+
+ 
+ 
+\RequirePackage{fapapersize}
+\usefastocksize{272mm,394mm}
+\usefapapersize{257mm,364mm,25mm,25mm,25mm,32mm}
+
+\setcolsepandrule{8mm}{0.3pt}
+
+\RequirePackage{graphicx,mathtools,tabu,kocircnum}
+\RequirePackage{tikz}
+\RequirePackage[tikz]{mdframed}
+%
+\setmainfont{TeX Gyre Termes}
+%
+%%%could it work well?
+%
+\if@mac
+\setmainhangulfont[Ligatures=TeX,BoldFont={KoPubBatang_Pro Medium},interhchar=-0.02em]{KoPubBatang_Pro Light}
+\setsanshangulfont[Ligatures=TeX,BoldFont={KoPubDotum_Pro Medium}]{KoPubDotum_Pro Light}
+\setmainhanjafont[Ligatures=TeX,BoldFont={KoPubBatang_Pro Medium}]{KoPubBatang_Pro Light}
+\setsanshanjafont[Ligatures=TeX,BoldFont={KoPubDotum_Pro Medium}]{KoPubDotum_Pro Light}
+\else
+\setmainhangulfont[Ligatures=TeX,BoldFont={KoPubBatang Medium},interhchar=-0.02em]{KoPubBatang Light}
+\setsanshangulfont[Ligatures=TeX,BoldFont={KoPubDotum Medium}]{KoPubDotum Light}
+\setmainhanjafont[Ligatures=TeX,BoldFont={KoPubBatang Medium}]{KoPubBatang Light}
+\setsanshanjafont[Ligatures=TeX,BoldFont={KoPubDotum Medium}]{KoPubDotum Light}
+\fi
+
+%%\setmainhangulfont[BoldFont={KoPubBatang Medium}]{KoPubBatang Light}
+%%\setsanshangulfont[BoldFont={KoPubDotum Medium}]{KoPubDotum Light}
+
+\xetexkofontregime[puncts=prevfont, colons=prevfont, cjksymbols=hangul]{latin}
+\everymath{\displaystyle}
+\everydisplay\expandafter{\the\everydisplay\def\baselinestretch{1.2}\selectfont}
+
+\RequirePackage{pgfkeys}
+
+\makeatletter
+% at first reading, set the keys at begin document
+\newcommand{\pgfkeysinaux}[1]{%
+  \AtBeginDocument{\pgfkeys{#1}}%
+}
+% at end document the command should do nothing
+\AtEndDocument{\let\pgfkeysinaux\@gobble}
+% a handier interface for writing to the aux file
+\newcommand{\writepgfkeys}[1]{%
+  \write\@auxout{\unexpanded{\pgfkeysinaux{#1}}}%
+}
+\makeatother
+
+\pgfkeys{/test 1/.initial=0}
+\pgfkeys{/test 2/.initial=0}
+\pgfkeys{/test 3/.initial=0}
+\pgfkeys{/test 4/.initial=0}
+\pgfkeys{/test 5/.initial=0}
+\pgfkeys{/test 6/.initial=0}
+\pgfkeys{/test 7/.initial=0}
+\pgfkeys{/test 8/.initial=0}
+\pgfkeys{/test 9/.initial=0}
+\pgfkeys{/test 10/.initial=0}
+\pgfkeys{/test 11/.initial=0}
+\pgfkeys{/test 12/.initial=0}
+\pgfkeys{/test 13/.initial=0}
+\pgfkeys{/test 14/.initial=0}
+\pgfkeys{/test 15/.initial=0}
+\pgfkeys{/test 16/.initial=0}
+\pgfkeys{/test 17/.initial=0}
+\pgfkeys{/test 18/.initial=0}
+\pgfkeys{/test 19/.initial=0}
+\pgfkeys{/test 20/.initial=0}
+\pgfkeys{/test 21/.initial=0}
+\pgfkeys{/test 22/.initial=0}
+\pgfkeys{/test 23/.initial=0}
+\pgfkeys{/test 24/.initial=0}
+\pgfkeys{/test 25/.initial=0}
+\pgfkeys{/test 16/.initial=0}
+\pgfkeys{/test 17/.initial=0}
+\pgfkeys{/test 18/.initial=0}
+\pgfkeys{/test 19/.initial=0}
+\pgfkeys{/test 20/.initial=0}
+\pgfkeys{/test 16/.initial=0}
+\pgfkeys{/test 17/.initial=0}
+\pgfkeys{/test 18/.initial=0}
+\pgfkeys{/test 19/.initial=0}
+\pgfkeys{/test 20/.initial=0}
+\pgfkeys{/test 21/.initial=0}
+\pgfkeys{/test 22/.initial=0}
+\pgfkeys{/test 23/.initial=0}
+\pgfkeys{/test 24/.initial=0}
+\pgfkeys{/test 25/.initial=0}
+\pgfkeys{/test 26/.initial=0}
+\pgfkeys{/test 27/.initial=0}
+\pgfkeys{/test 28/.initial=0}
+\pgfkeys{/test 29/.initial=0}
+\pgfkeys{/test 30/.initial=0}
+
+
+\RequirePackage{ifthen}
+
+\newcounter{answer}
+\newcounter{subsol}
+\newcounter{subsubsol}
+
+\newenvironment{answer}[1]{\stepcounter{answer}\setcounter{subsol}{0}\setcounter{subsubsol}{0}\noindent{\large\theanswer. #1\vskip 5pt}}{\vskip 15pt}
+
+\newenvironment{subsol}[1][\empty]{%
+\ifthenelse{\equal{#1}{\empty}}{
+\stepcounter{subsol}%
+\setcounter{subsubsol}{0}
+\noindent풀이 \thesubsol)\enspace}
+{\stepcounter{subsubsol}
+\noindent(풀이 \thesubsol-\thesubsubsol)\enspace 
+}
+}{\vskip 6pt plus 2pt minus 2pt}
+
+
+
+\makeatletter
+\newcommand{\answertitle}[1]{\newcommand{\@answertitle}{#1}}
+\makeatletter
+
+\newcommand{\myanswer}[2]{\hfill 답: #2 \writepgfkeys{/test #1=#2}}
+\newcommand{\plotanswer}{\begin{center}
+{\sffamily \Large \@answertitle} 
+\end{center}
+\noindent\begin{tabu}{|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|}\hline
+1&\pgfkeysvalueof{/test 1} &2 &\pgfkeysvalueof{/test 2} &3 &\pgfkeysvalueof{/test 3} &4 &\pgfkeysvalueof{/test 4} &5 &\pgfkeysvalueof{/test 5}\\\hline
+6&\pgfkeysvalueof{/test 6} &7 &\pgfkeysvalueof{/test 7} &8 &\pgfkeysvalueof{/test 8} &9 &\pgfkeysvalueof{/test 9} &10 &\pgfkeysvalueof{/test 10}\\\hline
+11&\pgfkeysvalueof{/test 11} &12 &\pgfkeysvalueof{/test 12} &13 &\pgfkeysvalueof{/test 13} &14 &\pgfkeysvalueof{/test 14} &15 &\pgfkeysvalueof{/test 15}\\\hline
+16&\pgfkeysvalueof{/test 16} &17 &\pgfkeysvalueof{/test 17} &18 &\pgfkeysvalueof{/test 18} &19 &\pgfkeysvalueof{/test 19} &20 &\pgfkeysvalueof{/test 20}\\\hline
+21&\pgfkeysvalueof{/test 21} &22 &\pgfkeysvalueof{/test 22} &23 &\pgfkeysvalueof{/test 23} &24 &\pgfkeysvalueof{/test 24} &25 &\pgfkeysvalueof{/test 25}\\\hline
+26&\pgfkeysvalueof{/test 26} &27 &\pgfkeysvalueof{/test 27} &28 &\pgfkeysvalueof{/test 28} &29 &\pgfkeysvalueof{/test 29} &30 &\pgfkeysvalueof{/test 30}\\\hline
+\end{tabu}\vskip 30pt}
+
+
+\mdfdefinestyle{kmstheoremB1}{skipabove=10pt,skipbelow=10pt,innertopmargin=0pt,linecolor=black,roundcorner=5pt,linewidth=1.2pt,topline=true,frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+
+\newenvironment{remark}[1]{\begin{mdframed}[style=kmstheoremB1,frametitle={\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=white]
+{\strut #1};}]}{\end{mdframed}}
+
+\endinput
